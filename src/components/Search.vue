@@ -23,17 +23,23 @@ export default {
       axios.get(vue.bookurl)
         .then(function(response) { 
           //console.log(response.data);
-          //vue.display(response.data);
+          vue.display(response.data);
           vue.book=response.data;
+          if (vue.book==''){console.log("찾는 데이타가 없습니다")}
           vue.$emit('dataemit',vue.book);
         })
         .catch(function(error) {
-          console.log(error);
+          console.log('error');
         });
     },
-    /*display: function(data) {
-      console.log(data[0].description)
-    }아직 안쓸거-SY02에서 사용*/
+    display: function(data) {
+      for(var key in data){
+        console.log(data[key].bookname);
+        for(var resultkey in data[key].result){
+          console.log(data[key].result[resultkey].count_stock+"개의 책이"+data[key].result[resultkey].mall+"에 있습니다");
+        }
+      }
+    }
   }
 }
 </script>
