@@ -1,7 +1,11 @@
 <template>
   <div>
-    <input v-on:keyup="checkEntered" v-model="bookname" placeholder="책이름">
+    <input v-on:keyup="checkEntered" v-model="searchname" placeholder="책이름">
     <button v-on:click="getData">가져오기</button>
+    <input type="radio" id="aladin" value="0" v-model="searchstore">
+    <label for="aladin">Aladin</label>
+    <input type="radio" id="yes" value="1" v-model="searchstore">
+    <label for="yes">YES24</label>
   </div>
 </template>
 
@@ -9,7 +13,7 @@
 import axios from 'axios'
 
 export default {
-  data:function(){return {bookname:'', bookurl:'', book:''}},
+  data:function(){return {searchname:'',searchstore:'',searchurl:'', search:''}},
 
   methods: {
     checkEntered: function() {
@@ -19,14 +23,14 @@ export default {
     },
     getData: function() {
       var vue = this;
-      vue.bookurl='http://sc0nep.iptime.org:8888/search?word='+String(vue.bookname)+'&mode=0'
-      axios.get(vue.bookurl)
+      vue.searchurl='http://sc0nep.iptime.org:8888/search?word='+String(vue.searchname)+'&mode='+String(vue.searchstore)
+      axios.get(vue.searchurl)
         .then(function(response) { 
           //console.log(response.data);
           vue.display(response.data);
-          vue.book=response.data;
-          if (vue.book==''){console.log("찾는 데이타가 없습니다")}
-          vue.$emit('dataemit',vue.book);
+          vue.search=response.data;
+          if (vue.search==''){console.log("찾는 데이타가 없습니다")}
+          vue.$emit('dataemit',[vue.search,vue.searchstore]);
         })
         .catch(function(error) {
           console.log('error');

@@ -2,7 +2,7 @@
   <div>
     <h1>보고싶은 책 쓰고 가져오기 누르면 가져와져요</h1>
     <search v-on:dataemit="dataEmit"></search>
-    <result v-bind:propsbook="emittedbook"></result>
+    <result v-bind:book="emittedbook"></result>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ import Result from './components/Result.vue'
 export default {
   data: function() {
     return {
-      emittedbook:''
+      emittedbook:'',
     }
   },
 
