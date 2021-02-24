@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>보고싶은 책 쓰고 가져오기 누르면 가져와져요</h1>
+    <h1>Find the book you need</h1>
     <search v-on:dataemit="dataEmit"></search>
     <result v-bind:book="emittedbook"></result>
   </div>
@@ -32,5 +32,11 @@ export default {
 </script>
 
 <style>
-
+  h1{
+    margin: 30px;
+    text-align: center;
+  }
+  body{
+    background-color: #bedbbb;
+  }
 </style>
