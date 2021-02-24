@@ -7,7 +7,6 @@
     <input type="radio" id="yes" value="1" v-model="searchstore">
     <label for="yes">YES24</label>
   </div>
-  <!--ㅁㄴㅇㄹ-->
 </template>
 
 <script>
