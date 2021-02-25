@@ -13,7 +13,7 @@
 import axios from 'axios'
 
 export default {
-  data:function(){return {searchname:'',searchstore:'',searchurl:'', search:''}},
+  data:function(){return {searchname:'',searchstore:'0',searchurl:'', search:''}},
 
   methods: {
     checkEntered: function() {
