@@ -1,12 +1,14 @@
 <template>
   <div>
-    <h1>Find the book you need</h1>
+    <header/>
     <search v-on:dataemit="dataEmit"></search>
+    <br><br><br><br><br>
     <result v-bind:book="emittedbook"></result>
   </div>
 </template>
 
 <script>
+import Header from './components/Header.vue'
 import Search from './components/Search.vue'
 import Result from './components/Result.vue'
 
@@ -18,6 +20,7 @@ export default {
   },
 
   components: {
+    header: Header,
     search: Search,
     result: Result,
   },
@@ -32,11 +35,5 @@ export default {
 </script>
 
 <style>
-  h1{
-    margin: 30px;
-    text-align: center;
-  }
-  body{
-    background-color: #bedbbb;
-  }
+
 </style>

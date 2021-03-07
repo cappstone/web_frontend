@@ -1,44 +1,46 @@
 <template>
-  <ul id="aladin" v-if="book[1]=='0'">
-    <li class="bookkey" v-for="key in book[0]" v-bind:key="key">
-      <b>{{key.bookname}}</b>
-      <p><img v-bind:src="key.imgurl"></p>
-      <p>{{key.description}}</p>
-      <div v-if="key.result!=''">현재 <b>{{key.stores}}</b>에 재고가 존재합니다.</div>
-      <div v-else>현재 재고가 없습니다.</div>
+  <div v-if="book[0]!=''">
+    <div v-if="book[1]=='0'">
+      <div class="book_card" v-for="(book,bookey) in book[0]" v-bind:key="bookey">
+        <b class="book_aladin_bookname">{{book.bookname}}</b>
+        <div class="book_container">
+          <p class="book_aladin_bookimg"><img v-bind:src="book.imgurl"></p>
+          <p class="book_aladin_bookdesc">{{book.description}}</p>
+          <div class="book_aladin_result" v-if="book.result!=''">현재 <b>{{book.stores}}</b>에 재고가 존재합니다.</div>
+          <div v-else>현재 재고가 없습니다.</div>
+        </div>
 
-      <ul class="place">
-        <li v-for="resultkey in key.result" v-bind:key="resultkey">
-          <p>{{resultkey.mall}}</p>
-          <div>현재{{resultkey.count_stock}}개</div>
-          <ul v-for="statuskey in resultkey.status_stock" v-bind:key="statuskey">
-            <li>
-              <div>{{statuskey.location}} 위치에 {{statuskey.quality}}급 물건이 {{statuskey.price}} 가격으로 있습니다.</div>
-            </li>
-          </ul>
+        <ul class="book_aladin_place">
+          <li v-for="(result,resultkey) in book.result" v-bind:key="resultkey">
+            <p>{{result.mall}}</p>
+            <ul v-for="(status,statuskey) in result.status_stock" v-bind:key="statuskey">
+              <li>
+                <div>{{status.location}} 위치에 {{status.quality}}급 물건이 {{status.price}} 가격으로 있습니다.</div>
+              </li>
+            </ul>
 
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-      <br>
-    </li>
-  </ul>
+    <ul id="yes" v-else>
+      <li v-for="key in book[0]" v-bind:key="key">
+        <p><b>{{key.mall}}</b>에 다음 책이 존재합니다.</p>
+        <ol v-for="resultkey in key.result" v-bind:key="resultkey">
+          <li v-if="resultkey!='검색 결과 없음'">
+            <b>{{resultkey.bookname}}</b>
+            <p>{{resultkey.description}}</p>
+            <div>{{resultkey.location}}이 {{resultkey.price}} 가격으로 있습니다.</div>
+          </li>
+          <li v-else>
+            <div>현재 재고가 없습니다.</div>
+          </li>
+        </ol>
+      </li>
+    </ul>
 
-  <ul id="yes" v-else>
-    <li v-for="key in book[0]" v-bind:key="key">
-      <p><b>{{key.mall}}</b>에 다음 책이 존재합니다.</p>
-      <ol v-for="resultkey in key.result" v-bind:key="resultkey">
-        <li v-if="resultkey!='검색 결과 없음'">
-          <b>{{resultkey.bookname}}</b>
-          <p>{{resultkey.description}}</p>
-          <div>{{resultkey.location}}이 {{resultkey.price}} 가격으로 있습니다.</div>
-        </li>
-        <li v-else>
-          <div>현재 재고가 없습니다.</div>
-        </li>
-      </ol>
-    </li>
-  </ul>
+  </div>
 </template>
 
 <script>
@@ -63,7 +65,34 @@ export default {
 </script>
 
 <style>
-  .bookkey{
+  .book_card {
+    margin: 10px 15px 20px 15px;
+    padding: 10px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3);
+    transition: 0.3s;
+
+    background-color: white;
+
+    max-width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .book_card:hover {
+    box-shadow: 0 16px 32px 0 rgba(0,0,0,0.3);
+  }
+
+  .book_container {
+    padding: 10px 20px;
+    display: flex;
+  }
+
+  .book_aladin_bookname {
+    font-size: 24px;
+  }
+
+
+  /*.bookkey{
     background: #bedbbb;
     text-align: left;
     font-size: 36px;
