@@ -25,7 +25,8 @@ export default {
     },
     getData: function() {
       var vue = this;
-      vue.searchurl='http://sc0nep.iptime.org:8888/search?word='+String(vue.searchname)+'&mode='+String(vue.searchstore)
+      vue.searchurl='http://sc0nep.iptime.org:8000/search?word='+String(vue.searchname)+'&mode='+String(vue.searchstore)
+      //vue.searchurl='http://localhost:8000/search?word='+String(vue.searchname)+'&mode='+String(vue.searchstore) //서버 맛갔을때 디버그용
       axios.get(vue.searchurl)
         .then(function(response) { 
           //console.log(response.data);
@@ -50,12 +51,12 @@ export default {
 }
 </script>
 
- <style>
+ <style scoped>
   .search{
     height: 50px;
-    max-width: 80%;
+    max-width: 60%;
 
-    border: 2px solid #383e56;
+    border: 3px solid #557174;
     border-radius: 6px;
 
     margin: 0 auto;
@@ -82,18 +83,13 @@ export default {
     width: 10%;
     float: right;
 
-    margin:0;
-    padding:0;
-
-    border-left: 2px solid #383e56;
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
     border-top: 0px;
     border-right: 0px;
     border-bottom: 0px;
     outline:none;
-  
-    color: #383e56;
+
     background: #8db596;
 
     cursor: pointer;
@@ -103,10 +99,11 @@ export default {
     background: #70af85;
   }
   .search button:active{
-    border-left: 4px solid #383e56;
-    border-right: 3px solid #383e56;
-    border-top: 3px solid #383e56;
-    border-bottom: 3px solid #383e56;
+    border-left:3px solid #557174;
+    border-top:1px solid #557174;
+    border-right:1px solid #557174;
+    border-bottom:1px solid #557174;
+
   }
 
   .select{
@@ -114,8 +111,8 @@ export default {
     margin-left:auto;
     margin-right:auto;
     padding:2px;
-    max-width: 10%;
-    border: 2px solid #383e56;
+    max-width: 15%;
+    border-style: inset;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     background: #8db596;
     border-radius: 20px;

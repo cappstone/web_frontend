@@ -1,9 +1,9 @@
 <template>
   <div>
-    <header/>
-    <search v-on:dataemit="dataEmit"></search>
-    <br><br><br><br><br>
-    <result v-bind:book="emittedbook"></result>
+    <Header/>
+    <Search v-on:dataemit="dataEmit"></Search>
+    <br><br><br>
+    <Result v-bind:book="emittedbook"></Result>
   </div>
 </template>
 
@@ -20,9 +20,9 @@ export default {
   },
 
   components: {
-    header: Header,
-    search: Search,
-    result: Result,
+    Header,
+    Search,
+    Result
   },
 
   methods: {
@@ -35,5 +35,7 @@ export default {
 </script>
 
 <style>
-
+body {
+  background-color: #F6F6F6;
+}
 </style>

@@ -1,19 +1,20 @@
 <template>
-  <div>
-    <h1>Find the book you need</h1>
-  </div>
+  <header>
+    <h1>중고책 검색시스템</h1>
+  </header>
 </template>
 
 <script>
 export default {
-  
+
 }
 </script>
 
-<style>
-  h1{
-    margin: 30px;
-    text-align: center;
-    color:#557174;
-  }
+<style scoped>
+h1 {
+  text-align: center;
+  margin: 30px;
+  color:#557174;
+  font-weight: 800;
+}
 </style>
