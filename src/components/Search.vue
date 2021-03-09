@@ -1,11 +1,25 @@
 <template>
-  <div>
+  <div class="search">
     <input v-on:keyup="checkEntered" v-model="searchname" placeholder="책이름">
-    <button v-on:click="getData">가져오기</button>
-    <input type="radio" id="aladin" value="0" v-model="searchstore">
-    <label for="aladin">Aladin</label>
-    <input type="radio" id="yes" value="1" v-model="searchstore">
-    <label for="yes">YES24</label>
+    <button v-on:click="getData"><font-awesome-icon icon="bullseye-pointer"/></button>
+    <div class="radio">
+      <tbody>
+        <tr>
+          <td>
+            <input type="radio" id="aladin" value="0" v-model="searchstore">
+          </td>
+          <td>
+            <div>Aladin</div>
+          </td>
+          <td>
+            <input type="radio" id="yes" value="1" v-model="searchstore">
+          </td>
+          <td>
+            <div>Yes24</div>
+          </td>
+        </tr>
+      </tbody>
+    </div>
   </div>
 </template>
 
@@ -48,6 +62,53 @@ export default {
 }
 </script>
 
-<style>
+ <style>
+  .search{
+    height: 50px;
+    width: 100%;
+    margin-left: 10%;
+    margin-right: 10%;
+    display: inline-block;
+  }
+  .search input{
+    height: 30px;
+    width: 80%;
+    border: 3px solid #8db596;
+    border-radius: 6px;
+    text-align: left;
+    font-size: 24px;
+    position: relative;
+    left: 20px;
+  }
+  .search button{
+    height: 30px;
+    width: 12%;
+    text-align: center;
+    border: 3px solid white;
+    border-radius: 6px;
+    margin-top: 5px;
+    color: black;
+    background: #8db596;
+    font-size: 20px;
+    float: right;
+    top: 3px;
+  }
 
+  .radio{
+    margin-top: 10px;
+    width: 30%;
+    float: right;
+    font-size: 20px;
+    border: 3px bold #8db596;
+    background: #8db596;
+    border-radius: 20px;
+    color: white;
+  }
+  .radio label{
+    margin-left: 5px;
+  }
+
+  #a:hover, #y:hover{
+    cursor: pointer;
+  }
 </style>
