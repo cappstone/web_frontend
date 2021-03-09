@@ -1,124 +1,186 @@
 <template>
-  <ul id="aladin" v-if="book[1]=='0'">
-    <li class="bookkey" v-for="key in book[0]" v-bind:key="key">
-      <b>{{key.bookname}}</b>
-      <p><img v-bind:src="key.imgurl"></p>
-      <p>{{key.description}}</p>
-      <div v-if="key.result!=''">현재 <b>{{key.stores}}</b>에 재고가 존재합니다.</div>
-      <div v-else>현재 재고가 없습니다.</div>
+  <div v-if="book[0]!=''">
+    <div v-if="book[1]=='0'">
 
-      <ul class="place">
-        <li v-for="resultkey in key.result" v-bind:key="resultkey">
-          <p>{{resultkey.mall}}</p>
-          <div>현재{{resultkey.count_stock}}개</div>
-          <ul v-for="statuskey in resultkey.status_stock" v-bind:key="statuskey">
-            <li>
-              <div>{{statuskey.location}} 위치에 {{statuskey.quality}}급 물건이 {{statuskey.price}} 가격으로 있습니다.</div>
+      <div v-for="(book,bookey) in book[0]" v-bind:key="bookey" v-bind:class="['book-card', {'accordion-open': accordionOpen.includes(bookey)}]">
+        <table class="book-aladin-info">
+          <tr>
+            <td rowspan="4" class="book-aladin-img">
+              <img v-bind:src="book.imgurl">
+            </td>
+            <td class="book_aladin_bookname">{{book.bookname}}</td>
+          </tr>
+          <tr>
+            <td class="book-aladin-desc">{{book.description}}</td>
+          </tr>
+          <tr>
+            <td><b>{{book.stores}}</b></td>
+          </tr>
+          <tr>
+            <td class="temp">
+              <button class="book-aladin-button" v-on:click="moreView(bookey)">
+                <label for="book-aladin-button" v-if="book.result==''"><b>재고 없음</b></label>
+                <label for="book-aladin-button" v-else><b>자세히</b></label>
+              </button>
+            </td>
+          </tr>
+        </table>
+
+        <div class="book-aladin-result">
+          <div v-for="(result,resultkey) in book.result" v-bind:key="resultkey">
+            <div class="book-aladin-place">{{result.mall}}</div>
+              <div class="book-aladin-status" v-for="(status,statuskey) in result.status_stock" v-bind:key="statuskey">
+                <table class="book-aladin-stock">
+                  <tr>
+                    <td class="book-aladin-location">{{status.location}}</td>
+                    <td rowspan="2" class="book-aladin-price">{{status.price}}</td>
+                  </tr>
+                  <tr>
+                    <td class="book-aladin-quality">{{status.quality}}급</td>
+                  </tr>
+                </table>
+              </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div id="yes" v-else>
+      <ul class="book-card" v-for="key in book[0]" v-bind:key="key" style="margin-bottom:1vw; padding:25px">
+        <li>
+          <b>{{key.mall}}</b>
+          <ol v-for="resultkey in key.result" v-bind:key="resultkey">
+            <li v-if="resultkey!='검색 결과 없음'">
+              <b>{{resultkey.bookname}}</b>
+              <p>{{resultkey.description}}</p>
+              <div>{{resultkey.location}}이 {{resultkey.price}} 가격으로 있습니다.</div>
             </li>
-          </ul>
-
+            <li v-else>
+              <div>현재 재고가 없습니다.</div>
+            </li>
+          </ol>
         </li>
       </ul>
-
-      <br>
-    </li>
-  </ul>
-
-  <ul id="yes" v-else>
-    <li v-for="key in book[0]" v-bind:key="key">
-      <p><b>{{key.mall}}</b>에 다음 책이 존재합니다.</p>
-      <ol v-for="resultkey in key.result" v-bind:key="resultkey">
-        <li v-if="resultkey!='검색 결과 없음'">
-          <b>{{resultkey.bookname}}</b>
-          <p>{{resultkey.description}}</p>
-          <div>{{resultkey.location}}이 {{resultkey.price}} 가격으로 있습니다.</div>
-        </li>
-        <li v-else>
-          <div>현재 재고가 없습니다.</div>
-        </li>
-      </ol>
-    </li>
-  </ul>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
     props:['book'],
 
+    data: function() {
+      return {
+        accordionOpen:[]
+      }
+    },
+
     methods:{
-      /**$(document).ready(function(){
-        $('.more').click(function(){
-          if($('.more').hasClass('more')){
-            $('.more').addClass('close').removeClass('more');
-            $('.more').addClass('close').removeClass('more');
-          }
-          else if($('.close').hasClass('close')){
-            $('.close').addClass('more').removeClass('close');
-            $('.more').addClass('close').removeClass('more');
-          }
-        });
-      });*/
+      moreView: function(index){
+        if (this.accordionOpen.includes(index)) {
+          this.accordionOpen = this.accordionOpen.filter(i => i != index)
+          return
+        }
+        this.accordionOpen.push(index);
+      }
     }
 }
 </script>
 
-<style>
-  .bookkey{
-    background: #bedbbb;
-    text-align: left;
-    font-size: 36px;
-    font-weight: bold;
-    color: #707070;
-    line-height: -46px;
-    }
-  .bookkey p{
-    text-align: center;
-  }
-  .bookkey p + p{
-    color: #92817a;
-    font-size: 24px;
-    text-align: center;
-  }
-  .bookkey div{
-    color: #92817a;
-    font-size: 18px;
-    text-align: center;
+<style scoped>
+  
+  .book-card {
+    margin: 0 auto;
+    margin-bottom: 2vw;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3);
+
+    background-color: white;
+
+    max-width: 63%;
+    height: auto;
+    position: relative;
+
+    transition: all 0.3s ease;
   }
 
-  .place{
-    display: block;
-    font-size: 24px;
-    text-align: left;
+  .book-card:hover {
+    box-shadow: 0 16px 32px 0 rgba(99,230,138,0.6);
   }
 
-  .place ul{
-    display: block;
-    font-size: 18px;
+  
+  .book-card:not(.accordion-open) .book-aladin-result {
+    height:0;
+    overflow:hidden;
+  }
+
+  .book-aladin-info {
+    padding: 10px;
+    width: 100%;
+
+    table-layout: fixed;
+  }
+
+  .book_aladin_bookname {
+    font-size: 2vw;
+    font-weight: 600;
+    
     text-align: left;
+    vertical-align: top;
+
+    overflow:auto;
   }
-  /**.m1{
-    left: 7%;
-    position: absolute;
+
+  .book-aladin-img {
+    width: 20%;
+    text-align: center;
+    padding: 0;
+    border-collapse: collapse;
   }
-  .b1{
-    display: block;
-    font-size: 28px;
+
+  .book-aladin-img img {
+    width:90%;
+  }
+
+  .book-aladin-desc {
     text-align: left;
-    clip: auto;
+    vertical-align: top;
+    padding: 0;
+    margin: 0;
   }
-  .place li{
-    position: absolute;
-    visibility: hidden;
-  }
-  .m1:hover, .m2:hover{
+
+  .book-aladin-button {
+    width: 100%;
+    height: 100%;
+    border-style: groove;
+    border-color: #557174;
+    background-color: white;
     cursor: pointer;
   }
-  .place p{
-    font-size: 30px;
-    text-align: justify;
+
+  .book-aladin-result {
+    padding: 0 15px 0 20px;
+    max-height:100%;
+    overflow:hidden;
+    background-color: white;
+    transition: max-height 0.5s ease-in-out; 
   }
-  .b2{
-    position: absolute;
-    list-style-type: square;
-  } */
+  
+  .book-aladin-place {
+    font-size: 1.5vw;
+    font-weight:600;
+    border-bottom: 1px groove #557174;
+  }
+
+  .book-aladin-stock {
+    padding: 5px;
+    width:100%;
+  }
+
+  .book-aladin-price {
+    text-align: right;
+    font-size: 2vw;
+    font-weight: 800;
+  }
 </style>

@@ -1,24 +1,12 @@
 <template>
-  <div class="search">
-    <input v-on:keyup="checkEntered" v-model="searchname" placeholder="책이름">
-    <button v-on:click="getData"><font-awesome-icon icon="bullseye-pointer"/></button>
-    <div class="radio">
-      <tbody>
-        <tr>
-          <td>
-            <input type="radio" id="aladin" value="0" v-model="searchstore">
-          </td>
-          <td>
-            <div>Aladin</div>
-          </td>
-          <td>
-            <input type="radio" id="yes" value="1" v-model="searchstore">
-          </td>
-          <td>
-            <div>Yes24</div>
-          </td>
-        </tr>
-      </tbody>
+  <div>
+    <section class="search">
+      <input v-on:keyup="checkEntered" v-model="searchname" placeholder="책이름">
+      <button v-on:click="getData"></button>
+    </section>
+    <div class="select">
+      <input type="radio" id="aladin" value="0" v-model="searchstore"><label for="aladin">Aladin</label>
+      <input type="radio" id="yes" value="1" v-model="searchstore"><label for="yes">Yes24</label>
     </div>
   </div>
 </template>
@@ -37,7 +25,8 @@ export default {
     },
     getData: function() {
       var vue = this;
-      vue.searchurl='http://sc0nep.iptime.org:8888/search?word='+String(vue.searchname)+'&mode='+String(vue.searchstore)
+      vue.searchurl='http://sc0nep.iptime.org:8000/search?word='+String(vue.searchname)+'&mode='+String(vue.searchstore)
+      //vue.searchurl='http://localhost:8000/search?word='+String(vue.searchname)+'&mode='+String(vue.searchstore) //서버 맛갔을때 디버그용
       axios.get(vue.searchurl)
         .then(function(response) { 
           //console.log(response.data);
@@ -62,53 +51,75 @@ export default {
 }
 </script>
 
- <style>
+ <style scoped>
   .search{
     height: 50px;
-    width: 100%;
-    margin-left: 10%;
-    margin-right: 10%;
-    display: inline-block;
+    max-width: 60%;
+
+    border: 3px solid #557174;
+    border-radius: 6px;
+
+    margin: 0 auto;
+    position: relative;
+    display:flex;
+
+    background-color: white;
   }
   .search input{
-    height: 30px;
-    width: 80%;
-    border: 3px solid #8db596;
-    border-radius: 6px;
+    width: 90%;
+
+    padding: 11px;
+
     text-align: left;
     font-size: 24px;
-    position: relative;
-    left: 20px;
+
+    border: 0px;
+    outline: none;
+
+    float: left;
   }
   .search button{
-    height: 30px;
-    width: 12%;
-    text-align: center;
-    border: 3px solid white;
-    border-radius: 6px;
-    margin-top: 5px;
-    color: black;
-    background: #8db596;
-    font-size: 20px;
+    height: 100%;
+    width: 10%;
     float: right;
-    top: 3px;
+
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top: 0px;
+    border-right: 0px;
+    border-bottom: 0px;
+    outline:none;
+
+    background: #8db596;
+
+    cursor: pointer;
   }
 
-  .radio{
+  .search button:hover{
+    background: #70af85;
+  }
+  .search button:active{
+    border-left:3px solid #557174;
+    border-top:1px solid #557174;
+    border-right:1px solid #557174;
+    border-bottom:1px solid #557174;
+
+  }
+
+  .select{
     margin-top: 10px;
-    width: 30%;
-    float: right;
-    font-size: 20px;
-    border: 3px bold #8db596;
+    margin-left:auto;
+    margin-right:auto;
+    padding:2px;
+    max-width: 15%;
+    border-style: inset;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     background: #8db596;
     border-radius: 20px;
     color: white;
-  }
-  .radio label{
-    margin-left: 5px;
+
+    font-size: 1vw;
+    text-align:center;
   }
 
-  #a:hover, #y:hover{
-    cursor: pointer;
-  }
 </style>
